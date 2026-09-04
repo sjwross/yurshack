@@ -1,0 +1,13 @@
+.DS_Store
+._*
+**/.DS_Store
+**/._*
+*.swp
+*~
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+.htaccess.local
