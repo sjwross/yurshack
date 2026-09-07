@@ -37,15 +37,30 @@ if (isset($_GET['logout'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     $user = trim((string) ($_POST['username'] ?? ''));
     $pass = (string) ($_POST['password'] ?? '');
-    if ($adminPass === null || $adminPass === '') {
+    $fails = (int) ($_SESSION['ys_admin_fails'] ?? 0);
+    $lockedUntil = (int) ($_SESSION['ys_admin_lock'] ?? 0);
+    if ($lockedUntil > time()) {
+        $wait = $lockedUntil - time();
+        $loginError = 'Too many failed attempts. Try again in ' . $wait . ' seconds.';
+    } elseif ($adminPass === null || $adminPass === '') {
         $loginError = 'Admin password is not configured. Set ADMIN_PASSWORD in .env.';
     } elseif (hash_equals($adminUser, $user) && hash_equals($adminPass, $pass)) {
+        unset($_SESSION['ys_admin_fails'], $_SESSION['ys_admin_lock']);
+        session_regenerate_id(true);
         $_SESSION['ys_admin'] = $user;
         header('Location: index.php');
         exit;
     } else {
-        $loginError = 'Invalid username or password.';
-        usleep(300000);
+        $fails++;
+        $_SESSION['ys_admin_fails'] = $fails;
+        if ($fails >= 5) {
+            $_SESSION['ys_admin_lock'] = time() + 900;
+            $_SESSION['ys_admin_fails'] = 0;
+            $loginError = 'Too many failed attempts. Try again in 15 minutes.';
+        } else {
+            $loginError = 'Invalid username or password.';
+        }
+        usleep(400000);
     }
 }
 

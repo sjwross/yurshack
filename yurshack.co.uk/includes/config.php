@@ -18,10 +18,12 @@ final class AppConfig
         }
         self::$loaded = true;
 
+        // Prefer site-local .env (blocked by .htaccess) or a file outside public_html.
+        // Do not load public_html/.env — that path is often web-reachable on cPanel.
         $candidates = [
             dirname(__DIR__) . '/.env',
-            dirname(__DIR__, 2) . '/.env',
             dirname(__DIR__, 3) . '/.env.yurshack',
+            dirname(__DIR__, 3) . '/yurshack.env',
         ];
 
         foreach ($candidates as $path) {

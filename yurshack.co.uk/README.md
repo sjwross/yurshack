@@ -20,7 +20,7 @@ Pricing matches the Master Website Service Agreement standard rates.
 
 1. Deploy with `./deploy.sh` (publishes `yurshack.com/` → `public_html/yurshack/`).
 2. Create a PostgreSQL database/user and run `sql/schema.sql`.
-3. Copy `.env.example` to `.env` in the site directory (or parent) and set:
+3. Copy `.env.example` to `.env` **inside the site directory** (`public_html/yurshack/.env`), or to `~/.env.yurshack` / `~/yurshack.env` outside the web root. Do not put secrets in `public_html/.env`.
    - `POSTGRES_DSN`, `POSTGRES_USER`, `POSTGRES_PASS`
    - `SMTP_*` (optional but recommended)
    - `ADMIN_PASSWORD` (required for `/admin/`)
