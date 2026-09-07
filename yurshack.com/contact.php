@@ -4,7 +4,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/includes/bootstrap.php';
 require_once __DIR__ . '/includes/mail.php';
 
-if (session_status() !== PHP_SESSION_ACTIVE) {
+if (session_status() !== PHP_SESSION_ACTIVE && (getenv('YURSHACK_STATIC') ?: '') !== '1') {
     session_start();
 }
 
@@ -96,7 +96,7 @@ render_header(
         </div>
       <?php endif; ?>
 
-      <form class="form-panel" method="post" action="contact.php" novalidate>
+      <form class="form-panel" method="post" action="<?= h(page_href('contact')) ?>" novalidate data-mail-to="support@yurshack.com">
         <div class="honeypot" aria-hidden="true">
           <label for="company_website">Company website</label>
           <input id="company_website" name="company_website" type="text" tabindex="-1" autocomplete="off">

@@ -18,8 +18,8 @@ render_header(
       <h2>Websites &amp; hosting, built to keep.</h2>
       <p class="hero-lead">We design, host, and look after small-business sites — from first build to quiet monthly care.</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="order.php">Start an order</a>
-        <a class="btn btn-ghost" href="services.php">View services</a>
+        <a class="btn btn-primary" href="<?= h(page_href('order')) ?>">Start an order</a>
+        <a class="btn btn-ghost" href="<?= h(page_href('services')) ?>">View services</a>
       </div>
     </div>
   </section>
@@ -69,8 +69,8 @@ render_header(
           <p>Send an order request and we will confirm scope, offered pricing, and next steps. Questions first? Write to support.</p>
         </div>
         <div class="cta-row">
-          <a class="btn btn-solid" href="order.php">Order form</a>
-          <a class="btn btn-outline" href="contact.php">Contact</a>
+          <a class="btn btn-solid" href="<?= h(page_href('order')) ?>">Order form</a>
+          <a class="btn btn-outline" href="<?= h(page_href('contact')) ?>">Contact</a>
         </div>
       </div>
     </div>

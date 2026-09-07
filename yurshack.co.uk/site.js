@@ -52,4 +52,26 @@
       el.addEventListener("change", sync);
     });
   }
+
+  // GitHub Pages has no PHP — open a draft email instead of posting.
+  if (document.body.dataset.static === "1") {
+    document.querySelectorAll("form[data-mail-to]").forEach((form) => {
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const to = form.getAttribute("data-mail-to") || "support@yurshack.com";
+        const data = new FormData(form);
+        const lines = [];
+        data.forEach((value, key) => {
+          if (key === "company_website") return;
+          if (typeof value === "string" && value.trim() !== "") {
+            lines.push(`${key}: ${value.trim()}`);
+          }
+        });
+        const isOrder = /order/i.test(form.getAttribute("action") || "") || form.querySelector("[name=domain_arrangement]");
+        const subject = encodeURIComponent(isOrder ? "Yur Shack order request" : "Yur Shack contact");
+        const body = encodeURIComponent(lines.join("\n"));
+        window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+      });
+    });
+  }
 })();

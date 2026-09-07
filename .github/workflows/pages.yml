@@ -1,10 +1,16 @@
 name: Deploy GitHub Pages
 
-# Production hosting is PHP on projtoolbox.com (./deploy.sh).
-# GitHub Pages cannot run PHP forms/admin; this workflow is manual-only
-# and publishes a static notice so the Pages URL is not a broken PHP tree.
+# Publishes a static HTML export of the marketing site to
+# https://sjwross.github.io/yurshack/
+# PHP forms/admin still require the projtoolbox.com host (./deploy.sh).
 
 on:
+  push:
+    branches: [main, 'cursor/**']
+    paths:
+      - 'yurshack.com/**'
+      - 'scripts/build-static-pages.php'
+      - '.github/workflows/pages.yml'
   workflow_dispatch:
 
 permissions:
@@ -26,24 +32,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build static Pages stub
-        run: |
-          mkdir -p _pages
-          cat > _pages/index.html << 'HTML'
-          <!DOCTYPE html>
-          <html lang="en-GB">
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <title>Yur Shack</title>
-            <meta http-equiv="refresh" content="0; url=https://yurshack.com/">
-            <link rel="canonical" href="https://yurshack.com/">
-          </head>
-          <body>
-            <p>Yur Shack lives at <a href="https://yurshack.com/">yurshack.com</a>.</p>
-          </body>
-          </html>
-          HTML
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+
+      - name: Build static Pages site
+        run: php scripts/build-static-pages.php _pages
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

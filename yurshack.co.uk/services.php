@@ -58,8 +58,8 @@ render_header(
           <p>Select the services you need and we will follow up from support@yurshack.com.</p>
         </div>
         <div class="cta-row">
-          <a class="btn btn-solid" href="order.php">Order</a>
-          <a class="btn btn-outline" href="terms.php">Terms overview</a>
+          <a class="btn btn-solid" href="<?= h(page_href('order')) ?>">Order</a>
+          <a class="btn btn-outline" href="<?= h(page_href('terms')) ?>">Terms overview</a>
         </div>
       </div>
     </div>
