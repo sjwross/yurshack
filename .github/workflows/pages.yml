@@ -6,7 +6,7 @@ name: Deploy GitHub Pages
 
 on:
   push:
-    branches: [main, 'cursor/**']
+    branches: [main]
     paths:
       - 'yurshack.com/**'
       - 'scripts/build-static-pages.php'
