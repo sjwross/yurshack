@@ -1,11 +1,10 @@
 name: Deploy GitHub Pages
 
+# Production hosting is PHP on projtoolbox.com (./deploy.sh).
+# GitHub Pages cannot run PHP forms/admin; this workflow is manual-only
+# and publishes a static notice so the Pages URL is not a broken PHP tree.
+
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'yurshack.com/**'
-      - '.github/workflows/pages.yml'
   workflow_dispatch:
 
 permissions:
@@ -27,13 +26,32 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Build static Pages stub
+        run: |
+          mkdir -p _pages
+          cat > _pages/index.html << 'HTML'
+          <!DOCTYPE html>
+          <html lang="en-GB">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Yur Shack</title>
+            <meta http-equiv="refresh" content="0; url=https://yurshack.com/">
+            <link rel="canonical" href="https://yurshack.com/">
+          </head>
+          <body>
+            <p>Yur Shack lives at <a href="https://yurshack.com/">yurshack.com</a>.</p>
+          </body>
+          </html>
+          HTML
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: yurshack.com
+          path: _pages
 
       - name: Deploy to GitHub Pages
         id: deployment

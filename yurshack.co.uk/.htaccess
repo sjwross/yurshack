@@ -1,0 +1,14 @@
+# Yur Shack — Apache helpers for shared hosting
+DirectoryIndex index.php index.html
+
+# Block sensitive paths
+<FilesMatch "^(\.env|\.env\..*|composer\.(json|lock))$">
+  Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^includes/ - [F,L]
+  RewriteRule ^sql/ - [F,L]
+  RewriteRule ^vendor/ - [F,L]
+</IfModule>

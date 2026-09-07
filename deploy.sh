@@ -27,6 +27,9 @@ tar -C "$SRC" \
   --exclude='._*' \
   --exclude='.git' \
   --exclude='deploy.sh' \
+  --exclude='.env' \
+  --exclude='.env.*' \
+  --exclude='README.md' \
   -czf - . \
   | ssh "$HOST" "tar -xzf - -C '${REMOTE_DIR}'"
 echo "Done. Visit https://yurshack.com/ and https://yurshack.co.uk/ after DNS/SSL settle."

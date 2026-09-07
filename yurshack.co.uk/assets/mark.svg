@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Yur Shack">
+  <rect width="64" height="64" rx="14" fill="#1e3d2f"/>
+  <path d="M14 34 L32 16 L50 34 V50 H14 Z" fill="#e8f0ea"/>
+  <rect x="28" y="36" width="8" height="14" rx="1" fill="#1e3d2f"/>
+  <path d="M12 34 L32 14 L52 34" fill="none" stroke="#8fbf9a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

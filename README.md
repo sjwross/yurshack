@@ -5,21 +5,23 @@ Source for **yurshack.com** and **yurshack.co.uk**.
 ## Layout
 
 ```
-yurshack.com/     # site files for yurshack.com
-yurshack.co.uk/   # site files for yurshack.co.uk
+yurshack.com/     # canonical PHP site (deploy target)
+yurshack.co.uk/   # kept in sync while domains share one server tree
 deploy.sh         # rsync/tar deploy to projtoolbox.com
 ```
 
-Both domains start as **identical copies**. Edit either folder when they should stay in sync (copy changes across), or let them diverge independently.
+Both domains start as **identical copies**. Edit `yurshack.com/` then sync to `.co.uk`, or let them diverge later with separate remote dirs.
 
-Today both hostnames still serve one shared tree on the server (`public_html/yurshack/`) via cPanel aliases + host-based `.htaccess` on `projtoolbox.com`. `deploy.sh` therefore publishes **`yurshack.com/`** to that path while the sites match.
+Today both hostnames still serve one shared tree on the server (`public_html/yurshack/`) via cPanel aliases. `deploy.sh` publishes **`yurshack.com/`** to that path.
 
-When the domains need different content:
+## What the site includes
 
-1. Keep editing each folder separately.
-2. Point deploy (or add a second target) at separate remote dirs, e.g. `public_html/yurshack-com/` and `public_html/yurshack-co-uk/`, and update host routing on the server.
+- Services & standard pricing from the Master Website Service Agreement
+- Contact form → `support@yurshack.com`
+- Order form → email + PostgreSQL `orders` table
+- Support admin at `/admin/` to search and update orders
 
-Do **not** commit server `.htaccess` from `public_html/` — it may contain secrets (API keys). Keep routing/secrets only on the host.
+See `yurshack.com/README.md` and `yurshack.com/.env.example` for server setup (`sql/schema.sql`, SMTP, admin password).
 
 ## Deploy
 
@@ -28,4 +30,4 @@ Do **not** commit server `.htaccess` from `public_html/` — it may contain secr
 ./deploy.sh other-host   # optional override
 ```
 
-Requires SSH access configured for the hosting account (see `~/.ssh/config` host `projtoolbox.com`).
+Requires SSH access for the hosting account. Do **not** commit `.env` or server `.htaccess` secrets from `public_html/`.
