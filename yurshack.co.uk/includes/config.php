@@ -18,13 +18,19 @@ final class AppConfig
         }
         self::$loaded = true;
 
-        // Prefer site-local .env (blocked by .htaccess) or a file outside public_html.
-        // Do not load public_html/.env — that path is often web-reachable on cPanel.
-        $candidates = [
-            dirname(__DIR__) . '/.env',
+        // Prefer secrets outside the web root (~/.env.yurshack). Site-local .env
+        // (blocked by .htaccess) is a fallback. dirname levels cover both
+        // public_html/ and public_html/yurshack/ document roots.
+        $home = getenv('HOME') ?: null;
+        $candidates = array_values(array_filter([
+            $home ? $home . '/.env.yurshack' : null,
+            $home ? $home . '/yurshack.env' : null,
+            dirname(__DIR__, 2) . '/.env.yurshack',
+            dirname(__DIR__, 2) . '/yurshack.env',
             dirname(__DIR__, 3) . '/.env.yurshack',
             dirname(__DIR__, 3) . '/yurshack.env',
-        ];
+            dirname(__DIR__) . '/.env',
+        ]));
 
         foreach ($candidates as $path) {
             if (is_readable($path)) {
