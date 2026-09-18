@@ -11,3 +11,9 @@
 *.key
 secrets/
 .htaccess.local
+
+# Server env copies (never commit)
+.env.yurshack
+yurshack.env
+**/.env.yurshack
+**/yurshack.env

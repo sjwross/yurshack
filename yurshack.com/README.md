@@ -18,20 +18,21 @@ Pricing matches the Master Website Service Agreement standard rates.
 
 ## Server setup
 
-1. Deploy with `./deploy.sh` (publishes `yurshack.com/` → `public_html/yurshack/`).
+1. Deploy with `./deploy.sh` (publishes `yurshack.com/` → `~/public_html`).
 2. Create a PostgreSQL database/user and run `sql/schema.sql`.
-3. Copy `.env.example` to `.env` **inside the site directory** (`public_html/yurshack/.env`), or to `~/.env.yurshack` / `~/yurshack.env` outside the web root. Do not put secrets in `public_html/.env`.
+3. Put secrets in `~/.env.yurshack` / `~/yurshack.env` (preferred), or site-local `.env` blocked by `.htaccess`. Never leave secrets web-readable.
    - `POSTGRES_DSN`, `POSTGRES_USER`, `POSTGRES_PASS`
    - `SMTP_*` (optional but recommended)
    - `ADMIN_PASSWORD` (required for `/admin/`)
    - `MAIL_TO=support@yurshack.com`
 4. Ensure PHP has `pdo_pgsql` and that Composer `vendor/autoload.php` is reachable for PHPMailer (typically `~/public_html/vendor`).
+5. In cPanel, park/alias `yurshack.co.uk` onto this account if both domains should serve the same site.
 
 ## Deploy
 
 ```bash
-./deploy.sh              # default SSH host: projtoolbox.com
-./deploy.sh other-host   # optional override
+./deploy.sh                         # Namecheap Stellar defaults
+./deploy.sh user@other-host [port]  # optional override
 ```
 
 Do not commit `.env` or server secrets. Keep both domain folders in sync while they share one remote path.

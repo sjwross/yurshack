@@ -26,8 +26,10 @@ See `yurshack.com/README.md` and `yurshack.com/.env.example` for server setup (`
 ## Deploy
 
 ```bash
-./deploy.sh              # default SSH host: projtoolbox.com
-./deploy.sh other-host   # optional override
+./deploy.sh                         # Namecheap: yursgcra@premium139.web-hosting.com:21098
+./deploy.sh user@other-host [port]  # optional override
 ```
 
-Requires SSH access for the hosting account. Do **not** commit `.env` or server `.htaccess` secrets from `public_html/`.
+Publishes `yurshack.com/` → `~/public_html` (main domain document root). Server secrets live in `~/.env.yurshack` and are not overwritten by deploy. Park `yurshack.co.uk` on the same account in cPanel to share the tree.
+
+Requires SSH access for the hosting account. Do **not** commit `.env` or server secrets.
