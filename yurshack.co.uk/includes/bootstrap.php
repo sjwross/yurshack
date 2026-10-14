@@ -104,7 +104,10 @@ function render_footer(): void
         <a href="<?= h(page_href('terms')) ?>">Terms</a>
         <a href="mailto:<?= h($email) ?>"><?= h($email) ?></a>
       </div>
-      <p class="footer-copy">&copy; <?= $year ?> Yur Shack</p>
+      <div class="footer-meta">
+        <p class="footer-copy">&copy; <?= $year ?> Yur Shack</p>
+        <p class="footer-founder">Founder Ryan Ross</p>
+      </div>
     </div>
   </footer>
   <script src="site.js" defer></script>
